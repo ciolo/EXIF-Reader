@@ -45,7 +45,7 @@ Using the button **Remove Item** the user can remove a single photo from the lis
 
 ### Get Info
 With the button **Get Info** the user can view, through a tab widget, the general information of the photo displayed in the main window, and can also access to exif data of the photo itself.
-[![exif.png]
+![exif.png](/Images/exif.png)
 
 ### Game demonstration
 
