@@ -1,29 +1,31 @@
-from PyQt5.QtCore import Qt, QEvent
-from PyQt5.QtWidgets import (QSlider, QLabel, QPushButton, QVBoxLayout, QHBoxLayout, QWidget, QFileDialog, QMessageBox,
-							 QCheckBox, QGroupBox, QDesktopWidget, QLineEdit, QListWidget, QListView)
-from PyQt5.QtGui import (QPixmap, QTransform, QIcon)
-from PyQt5.QtCore import QFile, QFileInfo, QSize
-
+from PyQt5.QtWidgets import (QPushButton, QVBoxLayout, QHBoxLayout, QWidget, QFileDialog, QMessageBox,
+							 QDesktopWidget, QListView)
+from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import QSize
 from MyWidgets import CustomTab, MyImageView, ImageFileList
 
 
 class MainWindow(QWidget):
 	"""
-	Main window controller
-	Attributes:
-		
-	"""
+    Main window controller
+
+    Attributes:
+        model         reference to an object of class MyModel (the model)
+        viewer        reference to an object of class MyImageView (main image)
+        viewer_list   reference to an object of class ImageFileList (list of images)
+        ...some graphical elements
+    """
 
 	def __init__(self, model):
 		super().__init__()
 
 		self.model = model
-		self.rotation = 0
 
 		self.initUI()
 		self.center_on_screen()
 
 	def initUI(self):
+		"""Method to initialize the UI: layouts and components"""
 		self.setWindowTitle("Exif Reader")
 
 		self.load = QPushButton()
@@ -34,6 +36,14 @@ class MainWindow(QWidget):
 		self.extract_info.setEnabled(False)
 		self.extract_info.setText("Get Info")
 		self.extract_info.clicked.connect(self.open_info)
+
+		self.empty_list = QPushButton()
+		self.empty_list.setEnabled(False)
+		self.empty_list.setText("Empty List")
+
+		self.remove_item = QPushButton()
+		self.remove_item.setEnabled(False)
+		self.remove_item.setText("Remove Item")
 
 		self.left_rotate = QPushButton()
 		self.left_rotate.setEnabled(False)
@@ -47,14 +57,15 @@ class MainWindow(QWidget):
 		self.right_rotate.setIconSize(QSize(24, 24))
 		self.right_rotate.clicked.connect(self.fnright_rotate)
 
-		self.viewer = MyImageView()
+		self.viewer = MyImageView(self)
 		self.viewer.resize(800, 600)
-		#self.viewer.setMaximumSize(QSize(512, 512))
 		self.viewer.set_model(self.model)
 
-		self.viewer_list = ImageFileList("/Users/albertociolini/Desktop/test/", self)
+		self.viewer_list = ImageFileList(self.model, self.viewer, self)
 		self.viewer_list.setFlow(QListView.LeftToRight)
-		self.viewer_list.setMaximumHeight(100)
+		self.viewer_list.setMaximumHeight(120)
+
+		self.viewer.set_viewer_list(self.viewer_list)
 
 		top_h_box = QHBoxLayout()
 		top_h_box.addWidget(self.load)
@@ -63,8 +74,13 @@ class MainWindow(QWidget):
 		top_h_box.addWidget(self.left_rotate)
 		top_h_box.addWidget(self.right_rotate)
 
+		bottom_button_box = QVBoxLayout()
+		bottom_button_box.addWidget(self.empty_list)
+		bottom_button_box.addWidget(self.remove_item)
+
 		bottom_h_box = QHBoxLayout()
 		bottom_h_box.addWidget(self.viewer_list)
+		bottom_h_box.addLayout(bottom_button_box)
 
 		layout = QVBoxLayout()
 		layout.addLayout(top_h_box)
@@ -73,13 +89,14 @@ class MainWindow(QWidget):
 
 		self.setLayout(layout)
 
-		self.setAcceptDrops(True)
-
 		self.setMinimumSize(600, 500)
-		#self.viewer.updateView()
 		self.show()
 
 	def center_on_screen(self):
+		"""
+		Centers main window
+		:return:
+		"""
 		qt_rectangle = self.frameGeometry()
 		center_point = QDesktopWidget().availableGeometry().center()
 		qt_rectangle.moveCenter(center_point)
@@ -91,9 +108,13 @@ class MainWindow(QWidget):
 		super().resizeEvent(ev)
 
 	def open_info(self):
-		general = self.model.get_info_general(self.model.name)
-		exif = self.model.get_exif_data(self.model.name)
-		self.custom_tab = CustomTab(self, exif, general)
+		"""
+		Open tab to visualize general info and exif data
+		:return:
+		"""
+		self.model.extract_general_info(self.model.current_image)
+		self.model.extract_exif_data(self.model.current_image)
+		self.custom_tab = CustomTab(self, self.model)
 		self.custom_tab.open_dict()
 
 	def load_image_but(self):
@@ -111,19 +132,21 @@ class MainWindow(QWidget):
 			self.extract_info.setEnabled(True)
 			self.left_rotate.setEnabled(True)
 			self.right_rotate.setEnabled(True)
+			self.empty_list.setEnabled(True)
 			self.model.update(filename)
+			self.model.fill_list(filename)
+			if self.viewer.rotate:
+				self.viewer.rotate = False
 			self.viewer.set_model(self.model)
-			self.viewer.update_view()
+			self.viewer_list.populate()
 		else:
 			QMessageBox.about(self, "File Name Error", "No file name selected")
-		self.viewer.update_view()
 
 	def fnleft_rotate(self):
 		"""
 		Rotate the image to the left 90 degrees
 		:return:
 		"""
-
 		self.viewer.left_rotate()
 
 	def fnright_rotate(self):
@@ -131,41 +154,4 @@ class MainWindow(QWidget):
 		Rotate the image to the right 90 degrees
 		:return:
 		"""
-
 		self.viewer.right_rotate()
-
-	def dragEnterEvent(self, e):
-
-		if len(e.mimeData().urls()) > 0 and e.mimeData().urls()[0].isLocalFile():
-			qi = QFileInfo(e.mimeData().urls()[0].toLocalFile())
-			ext = qi.suffix()
-			if ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'JPG' or ext == 'PNG':
-				e.accept()
-				self.model.name = qi.filePath()
-				self.extract_info.setEnabled(True)
-				self.left_rotate.setEnabled(True)
-				self.right_rotate.setEnabled(True)
-			else:
-				e.ignore()
-		else:
-			e.ignore()
-
-	def dropEvent(self, e):
-		"""
-		Drop files directly onto the widget
-		File locations are stored in fname
-		:param e:
-		:return:
-		"""
-		if e.mimeData().hasUrls:
-			e.setDropAction(Qt.CopyAction)
-			e.accept()
-			# Workaround for OSx dragging and dropping
-			for url in e.mimeData().urls():
-				fname = str(url.toLocalFile())
-
-			self.model.update(fname)
-			self.viewer.set_model(self.model)
-			self.viewer.update_view()
-		else:
-			e.ignore()

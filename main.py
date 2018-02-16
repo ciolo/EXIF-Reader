@@ -1,12 +1,12 @@
 import sys
 from Model import MyModel
 from MainWindow import MainWindow
-from PyQt5.QtWidgets import QApplication
+from PyQt5.QtWidgets import QApplication #pip3 install PyQt5
 
 
 qdark_present = True
 try:
-	import qdarkstyle  
+	import qdarkstyle  # Qt styling package, pip3 install qdarkstyle
 except ImportError:
 	qdark_present = False
 
