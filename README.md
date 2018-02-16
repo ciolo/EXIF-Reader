@@ -1,4 +1,4 @@
-# Exif Reader
+# Image and Exif Viewer
 ## Overview
 **Exchangeable image file format**, Exif, is a standard that specifies the formats for images, sound, and ancillary tags used by digital cameras (including smartphones), scanners and other systems handling image and sound files recorded by digital cameras. The specification uses the following existing file formats with the addition of specific metadata tags: JPEG for compressed image files, TIFF for uncompressed image files, and RIFF WAV for audio files.It is not used in JPEG 2000 or GIF.
 The metadata tags defined in the Exif standard cover a broad spectrum:
