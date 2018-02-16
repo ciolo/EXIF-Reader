@@ -120,6 +120,7 @@ class MainWindow(QWidget):
 	def load_image_but(self):
 		"""
 		Open a File dialog when the button is pressed
+		Update the model, fill and populate the list.
 		:return:
 		"""
 		options = QFileDialog.Options()
