@@ -25,14 +25,14 @@ $ python3 main.py
 ```
 ### Main window
 The Main window presents itself like this:
-[![Images/init.png]
+[![init.png]
 
 ### Add Photo/Drag and Drop
 The user can add a photo using the push buttons at the top or he can drag it into the window.
 If the user drags more than one photo, the list below will be filled and the last photo will be uploaded.
 
 When the user drags or adds one or more photos, the Main window will show up as follows
-[![/Images/after.png]
+[![after.png]
 
 ### Rotate
 The user can also rotate the image 90 degrees to the left and 90 degrees to the right using the two buttons at the top.
@@ -45,7 +45,7 @@ Using the button **Remove Item** the user can remove a single photo from the lis
 
 ### Get Info
 With the button **Get Info** the user can view, through a tab widget, the general information of the photo displayed in the main window, and can also access to exif data of the photo itself.
-[![Images/exif.png]
+[![exif.png]
 
 ### Game demonstration
 
