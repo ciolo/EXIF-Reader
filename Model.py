@@ -67,7 +67,8 @@ class MyModel:
 
 	def delete_element(self, position):
 		"""
-		Delete image from list at certain position
+		Delete image from list at certain position.
+		if image deleted is main image update the model
 		:param position: position of image in list
 		:return:
 		"""
