@@ -7,3 +7,56 @@ The metadata tags defined in the Exif standard cover a broad spectrum:
  - A thumbnail for previewing the picture on the camera's LCD screen, in file managers, or in photo manipulation software.
  - Each unpopulated location that becomes populated if it has exactly **three** populated neighbors
  - Copyright information
+
+## Implementation
+The Reader was implemented using Python and pattern MVC. Furthermore, PyQT was used to develop the GUI.
+
+### The Model
+The model has been implemented in the `Model` Class. This class contain the program state.
+It provides methods to get, set, modify and evolve the program state.
+
+### The GUI
+The GUI is composed of a main window (`MainWindow` class) containing some stock widgets and some custom widget developed for this assignment.
+
+## Functionalities
+The program can be launched from the `main.py` script:
+```
+$ python3 main.py
+```
+### Main window
+The Main window presents itself like this:
+(inserire immagine 'init')
+
+### Add Photo/Drag and Drop
+The user can add a photo using the push buttons at the top or he can drag it into the window.
+If the user drags more than one photo, the list below will be filled and the last photo will be uploaded.
+
+When the user drags or adds one or more photos, the Main window will show up as follows
+(inserire immagine 'after')
+
+### Rotate
+The user can also rotate the image 90 degrees to the left and 90 degrees to the right using the two buttons at the top.
+
+### Empty List
+With the button **Empty List** at the bottom the user can empty the list of images returning to the initial situation.
+
+### Remove Item
+Using the button **Remove Item** the user can remove a single photo from the list.
+
+### Get Info
+With the button **Get Info** the user can view, through a tab widget, the general information of the photo displayed in the main window, and can also access to exif data of the photo itself.
+(inserire foto 'exif')
+
+### Game demonstration
+
+<img src="https://s1.gifyu.com/images/demonstration.gif" alt="Demonstration Gif" data-load="full">
+
+## Requirements
+| Software           | Version        | Required |
+| --------------     |:--------------:| --------:|
+| **Python**         |     >= 3.5     |    Yes   |
+| **PyQt5**          |     >= 5.1     |    Yes   |
+| **hurry.filesize** |     v0.9       |    Yes   |
+| QDarkStylesheet    |    >= 2.3.1    | Optional |
+
+hurry.filesize a simple Python library that can take a number of bytes and returns a human-readable string with the size in it, in kilobytes (K), megabytes (M), etc.
