@@ -25,14 +25,14 @@ $ python3 main.py
 ```
 ### Main window
 The Main window presents itself like this:
-[![init.png](/Images/init.png)]
+![init.png](/Images/init.png)
 
 ### Add Photo/Drag and Drop
 The user can add a photo using the push buttons at the top or he can drag it into the window.
 If the user drags more than one photo, the list below will be filled and the last photo will be uploaded.
 
 When the user drags or adds one or more photos, the Main window will show up as follows
-[![after.png]
+![after.png](/Images/after.png)
 
 ### Rotate
 The user can also rotate the image 90 degrees to the left and 90 degrees to the right using the two buttons at the top.
