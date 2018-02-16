@@ -13,7 +13,7 @@ The Reader was implemented using Python and pattern MVC. Furthermore, PyQT was u
 
 ### The Model
 The model has been implemented in the `MyModel` Class. This class contain the program state.
-It provides methods to get, set, modify and evolve the program state.
+It provides methods to get, set, modify and evolve the state.
 
 ### The GUI
 The GUI is composed of a main window (`MainWindow` class) containing some stock widgets and some custom widget developed for this assignment.
