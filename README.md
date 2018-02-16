@@ -25,7 +25,7 @@ $ python3 main.py
 ```
 ### Main window
 The Main window presents itself like this:
-[![/Images/init.png]
+[![Images/init.png]
 
 ### Add Photo/Drag and Drop
 The user can add a photo using the push buttons at the top or he can drag it into the window.
