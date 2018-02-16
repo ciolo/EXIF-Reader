@@ -12,7 +12,7 @@ The metadata tags defined in the Exif standard cover a broad spectrum:
 The Reader was implemented using Python and pattern MVC. Furthermore, PyQT was used to develop the GUI.
 
 ### The Model
-The model has been implemented in the `Model` Class. This class contain the program state.
+The model has been implemented in the `MyModel` Class. This class contain the program state.
 It provides methods to get, set, modify and evolve the program state.
 
 ### The GUI
