@@ -56,3 +56,6 @@ With the button **Get Info** the user can view, through a tab widget, the genera
 | QDarkStylesheet    |    >= 2.3.1    | Optional |
 
 hurry.filesize a simple Python library that can take a number of bytes and returns a human-readable string with the size in it, in kilobytes (K), megabytes (M), etc.
+
+## License
+Licensed under the term of [MIT License](http://en.wikipedia.org/wiki/MIT_License). See attached file LICENSE.
