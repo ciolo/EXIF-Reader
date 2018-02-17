@@ -58,6 +58,9 @@ class MyImageView(QLabel):
 		elif not self.model.current_image:
 			self.qpix = QPixmap()
 			self.setPixmap(self.qpix)
+			self.parent.extract_info.setEnabled(False)
+			self.parent.left_rotate.setEnabled(False)
+			self.parent.right_rotate.setEnabled(False)
 
 	def left_rotate(self):
 		"""
